@@ -17,9 +17,50 @@ This project follows the **Product Exploration** trajectory. The objective is to
 * `app/`: The Streamlit interactive dashboard prototype.
 
 ## Setup Instructions for Collaborators
-This project uses `uv` for fast and reproducible Python environments.
+
+### Prerequisites
+- Python 3.9 or higher
+- Git
+
+### Installation
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/Flaviusben/jogair_project.git](https://github.com/Flaviusben/jogair_project.git)
+   git clone https://github.com/Flaviusben/jogair_project.git
    cd jogair_project
+   ```
+
+2. **Create a virtual environment:**
+   ```bash
+   # On Windows
+   python -m venv .venv
+   .venv\Scripts\activate
+
+   # On macOS/Linux
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
+
+3. **Install dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Generate your own data:**
+   - The `data/raw/` and `data/processed/` folders are not included in the repository (Git-ignored)
+   - Run the data collection scripts in `src/collectors/` to fetch data from APIs:
+     ```bash
+     python src/collectors/open_meteo_api.py
+     ```
+
+5. **Set up environment variables (if needed):**
+   - Create a `.env` file in the project root for any API keys or sensitive configs
+   - Reference `python-dotenv` for loading environment variables
+
+### Running the Project
+
+- **Jupyter Notebooks:** Open notebooks in `notebooks/` for EDA and exploratory analysis
+- **Streamlit Dashboard:** Launch the interactive app with:
+  ```bash
+  streamlit run app/main.py
+  ```
