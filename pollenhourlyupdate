@@ -1,0 +1,40 @@
+import requests
+import schedule
+import time
+
+API_KEY = "myAPIkeyfromwebsite"
+
+def fetch_pollen():
+    url = "https://api.ambeedata.com/latest/pollen/by-lat-lng"
+
+    headers = {
+        "x-api-key": API_KEY,
+        "Content-type": "application/json"
+    }
+
+    params = {
+        "lat": 56.1629,
+        "lng": 10.2039
+    }
+
+    response = requests.get(url, headers=headers, params=params)
+    data = response.json()
+
+    pollen = data["data"][0]["Risk"]
+
+    print("----- Aarhus Pollen Update -----")
+    print("Tree:", pollen["tree_pollen"])
+    print("Grass:", pollen["grass_pollen"])
+    print("Weed:", pollen["weed_pollen"])
+    print("--------------------------------")
+
+
+# run immediately
+fetch_pollen()
+
+# run every hour
+schedule.every().hour.do(fetch_pollen)
+
+while True:
+    schedule.run_pending()
+    time.sleep(60)
