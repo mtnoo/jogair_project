@@ -65,7 +65,7 @@ def load_city_graph() -> nx.MultiDiGraph:
     return graph
 
 
-def add_pollution_costs_to_graph(graph: nx.MultiDiGraph, baseline_pollution: float = 1.0) -> None:
+def add_pollution_costs_to_graph(graph: nx.MultiDiGraph, pollution_value: float = 1.0) -> None:
     """Add pollution_cost attribute to all edges based on highway type and length.
 
     The pollution_cost combines the edge length with a highway-type multiplier.
@@ -73,7 +73,7 @@ def add_pollution_costs_to_graph(graph: nx.MultiDiGraph, baseline_pollution: flo
 
     Args:
         graph: The street network graph to augment.
-        baseline_pollution: Base pollution value for calculating costs (default: 1.0).
+        pollution_value: Base pollution value for calculating costs (default: 1.0).
             In future versions, this can be adjusted based on real-time air quality data
             (e.g., from DMI API) to dynamically reflect current pollution conditions.
     """
@@ -93,7 +93,7 @@ def add_pollution_costs_to_graph(graph: nx.MultiDiGraph, baseline_pollution: flo
         multiplier = POLLUTION_MULTIPLIERS.get(highway_type, DEFAULT_MULTIPLIER)
 
         # Calculate pollution cost
-        pollution_cost = length * (baseline_pollution * multiplier)
+        pollution_cost = length * (pollution_value * multiplier)
 
         # Add to edge attributes
         graph[u][v][key]["pollution_cost"] = pollution_cost
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     graph = load_city_graph()
 
     # Add pollution costs to all edges
-    add_pollution_costs_to_graph(graph, baseline_pollution=1.0)
+    add_pollution_costs_to_graph(graph, pollution_value=1.0)
 
     # Test routes with dummy Aarhus coordinates
     # Start: Varna Square (56.1552, 10.2082)
