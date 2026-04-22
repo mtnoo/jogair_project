@@ -127,23 +127,20 @@
         iconSize: [25, 41], iconAnchor: [12, 41]
     });
 
-    map.on('click', function(e) {
-        if (clickState === "start") {
-            if (startMarker) map.removeLayer(startMarker);
-            startMarker = L.marker(e.latlng, {icon: greenIcon})
-                .addTo(map)
-                .bindPopup("Start").openPopup();
-            clickState = "end";
-            setStatus("Start set! Now click to set your end point.");
-        } else if (clickState === "end") {
-            if (endMarker) map.removeLayer(endMarker);
-            endMarker = L.marker(e.latlng, {icon: redIcon})
-                .addTo(map)
-                .bindPopup("End").openPopup();
-            clickState = "done";
-            setStatus("End set! Press Find Routes to calculate.");
-        }
-    });
+   map.on('click', function(e) {
+    if (!startMarker) {
+        startMarker = L.marker(e.latlng, {icon: greenIcon})
+            .addTo(map)
+            .bindPopup("Start").openPopup();
+        setStatus("Start set! Now click to set your end point.");
+    } else {
+        if (endMarker) map.removeLayer(endMarker);
+        endMarker = L.marker(e.latlng, {icon: redIcon})
+            .addTo(map)
+            .bindPopup("End").openPopup();
+        setStatus("End set! Press Find Routes or click to move end point.");
+    }
+});
 
     async function findRoutes() {
         if (!startMarker || !endMarker) {
