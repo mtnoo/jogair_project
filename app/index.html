@@ -105,8 +105,8 @@
 
     // Initialize map centered on Aarhus
     const map = L.map('map').setView([56.1629, 10.2039], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© OpenStreetMap contributors'
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    attribution: '© OpenStreetMap contributors © CARTO'
     }).addTo(map);
 
     let startMarker = null;
